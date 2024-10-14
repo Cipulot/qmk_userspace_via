@@ -141,7 +141,7 @@ void via_config_set_value(uint8_t *data) {
             }
         }
         indicators_callback();
-    } else
+    } else {
         switch (*value_id) {
             case id_actuation_mode: {
                 eeprom_ec_config.actuation_mode = value_data[0];
@@ -234,6 +234,7 @@ void via_config_set_value(uint8_t *data) {
                 break;
             }
         }
+    }
 }
 
 // Handle the data sent by the keyboard to the VIA menus
