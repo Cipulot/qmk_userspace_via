@@ -61,8 +61,6 @@ bool led_update_kb(led_t led_state) {
     return true;
 }
 
-
-
 // This function is called when layers change
 __attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) {
     indicators_callback();
@@ -96,8 +94,6 @@ bool func_switch(uint8_t func) {
         case 0x07: // layer 3
         case 0x08: // layer 4
         case 0x09: // layer 5
-        case 0x0A: // layer 6
-        case 0x0B: // layer 7
         {
             if (IS_LAYER_ON((int)(func)-4)) return true;
             break;
@@ -111,7 +107,7 @@ bool func_switch(uint8_t func) {
 
 bool set_indicator(indicator_config indicator) {
     if (!indicator.enabled) return false;
-    return func_switch(indicator.func & 0x0F) | func_switch((indicator.func & 0xF0) >> 4);
+    return func_switch(indicator.func & 0x0F);
 }
 
 bool indicators_callback(void) {
