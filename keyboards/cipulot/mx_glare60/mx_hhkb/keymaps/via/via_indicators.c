@@ -27,11 +27,11 @@ enum via_enums {
     id_ind1_enabled = 1,
     id_ind1_brightness = 2,
     id_ind1_color = 3,
-    id_ind1_func1 = 4,
+    id_ind1_func = 4,
     id_ind2_enabled = 5,
     id_ind2_brightness = 6,
     id_ind2_color = 7,
-    id_ind2_func1 = 8
+    id_ind2_func = 8
     // clang-format on
 };
 
