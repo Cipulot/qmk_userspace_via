@@ -174,12 +174,12 @@ void via_config_set_value(uint8_t *data) {
                 break;
             }
             case id_mode_1_actuation_offset: {
-                ec_config.mode_1_actuation_offset = value_data[0];
+                ec_config.mode_1_actuation_offset = value_data[1] | (value_data[0] << 8);
                 uprintf("Rapid Trigger Mode Actuation Sensitivity: %d\n", ec_config.mode_1_actuation_offset);
                 break;
             }
             case id_mode_1_release_offset: {
-                ec_config.mode_1_release_offset = value_data[0];
+                ec_config.mode_1_release_offset = value_data[1] | (value_data[0] << 8);
                 uprintf("Rapid Trigger Mode Release Sensitivity: %d\n", ec_config.mode_1_release_offset);
                 break;
             }
@@ -263,12 +263,11 @@ void via_config_get_value(uint8_t *data) {
             }
             case 4: {
                 value_data[0] = current_indicator_p->func & 0x0F;
-
                 break;
             }
             case 5: {
                 value_data[0] = (current_indicator_p->func & 0xF0) >> 4;
-                uprintf("--> Current func: %x, current func with bitwise or: %X\n", current_indicator_p->func, current_indicator_p->func % 0xF0);
+
                 break;
             }
             default: {

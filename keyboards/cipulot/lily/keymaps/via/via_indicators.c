@@ -149,12 +149,10 @@ void via_config_get_value(uint8_t *data) {
         }
         case 4: {
             value_data[0] = current_indicator_p->func & 0x0F;
-
             break;
         }
         case 5: {
             value_data[0] = (current_indicator_p->func & 0xF0) >> 4;
-            uprintf("--> Current func: %x, current func with bitwise or: %X\n", current_indicator_p->func, current_indicator_p->func % 0xF0);
             break;
         }
         default: {
