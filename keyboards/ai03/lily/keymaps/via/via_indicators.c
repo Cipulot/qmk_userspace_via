@@ -54,7 +54,6 @@ void via_config_set_value(uint8_t *data) {
     indi_index                            = ((int)(*value_id) - 1) / 5;
     data_index                            = (int)(*value_id) - indi_index * 5;
     indicator_config *current_indicator_p = get_indicator_p(indi_index);
-    uprintf("--> value_id: %X\n", (int)(*value_id));
 
     switch (data_index) {
         case 1: {
