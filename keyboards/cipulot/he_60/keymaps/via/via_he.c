@@ -220,7 +220,7 @@ void he_rescale_values(uint8_t item) {
         case 0:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    he_config.rescaled_mode_0_actuation_threshold[row][col] = rescale(he_config.mode_0_actuation_threshold, 0, 1023, he_config.noise_floor[row][col], eeprom_he_config.bottoming_reading[row][col]);
+                    he_config.rescaled_mode_0_actuation_threshold[row][col] = rescale(he_config.mode_0_actuation_threshold, he_config.noise_floor[row][col], eeprom_he_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -228,7 +228,7 @@ void he_rescale_values(uint8_t item) {
         case 1:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    he_config.rescaled_mode_0_release_threshold[row][col] = rescale(he_config.mode_0_release_threshold, 0, 1023, he_config.noise_floor[row][col], eeprom_he_config.bottoming_reading[row][col]);
+                    he_config.rescaled_mode_0_release_threshold[row][col] = rescale(he_config.mode_0_release_threshold, he_config.noise_floor[row][col], eeprom_he_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -236,7 +236,7 @@ void he_rescale_values(uint8_t item) {
         case 2:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    he_config.rescaled_mode_1_initial_deadzone_offset[row][col] = rescale(he_config.mode_1_initial_deadzone_offset, 0, 1023, he_config.noise_floor[row][col], eeprom_he_config.bottoming_reading[row][col]);
+                    he_config.rescaled_mode_1_initial_deadzone_offset[row][col] = rescale(he_config.mode_1_initial_deadzone_offset, he_config.noise_floor[row][col], eeprom_he_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -277,7 +277,7 @@ void he_save_bottoming_reading(void) {
             // 2. The key is on an alternative layout, therefore not being pressed
             // 3. The key in in the current layout but not being pressed
             if (he_config.bottoming_reading[row][col] < (he_config.noise_floor[row][col] + BOTTOMING_CALIBRATION_THRESHOLD)) {
-                eeprom_he_config.bottoming_reading[row][col] = 1023;
+                eeprom_he_config.bottoming_reading[row][col] = ADC_SATURATION;
             } else {
                 eeprom_he_config.bottoming_reading[row][col] = he_config.bottoming_reading[row][col];
             }

@@ -364,7 +364,7 @@ void ec_rescale_values(uint8_t item) {
         case 0:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    ec_config.rescaled_mode_0_actuation_threshold[row][col] = rescale(ec_config.mode_0_actuation_threshold, 0, 1023, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
+                    ec_config.rescaled_mode_0_actuation_threshold[row][col] = rescale(ec_config.mode_0_actuation_threshold, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -372,7 +372,7 @@ void ec_rescale_values(uint8_t item) {
         case 1:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    ec_config.rescaled_mode_0_release_threshold[row][col] = rescale(ec_config.mode_0_release_threshold, 0, 1023, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
+                    ec_config.rescaled_mode_0_release_threshold[row][col] = rescale(ec_config.mode_0_release_threshold, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -380,7 +380,7 @@ void ec_rescale_values(uint8_t item) {
         case 2:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    ec_config.rescaled_mode_1_initial_deadzone_offset[row][col] = rescale(ec_config.mode_1_initial_deadzone_offset, 0, 1023, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
+                    ec_config.rescaled_mode_1_initial_deadzone_offset[row][col] = rescale(ec_config.mode_1_initial_deadzone_offset, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -388,7 +388,7 @@ void ec_rescale_values(uint8_t item) {
         case 3:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    ec_config.rescaled_mode_1_actuation_offset[row][col] = rescale(ec_config.mode_1_actuation_offset, 0, 1023, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
+                    ec_config.rescaled_mode_1_actuation_offset[row][col] = rescale(ec_config.mode_1_actuation_offset, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -396,7 +396,7 @@ void ec_rescale_values(uint8_t item) {
         case 4:
             for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
                 for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-                    ec_config.rescaled_mode_1_release_offset[row][col] = rescale(ec_config.mode_1_release_offset, 0, 1023, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
+                    ec_config.rescaled_mode_1_release_offset[row][col] = rescale(ec_config.mode_1_release_offset, ec_config.noise_floor[row][col], eeprom_ec_config.bottoming_reading[row][col]);
                 }
             }
             break;
@@ -438,7 +438,7 @@ void ec_save_bottoming_reading(void) {
             // 2. The key is in the current layout but is not being pressed.
             // In both conditions we should set the bottoming reading to the maximum value to avoid false positives.
             if (ec_config.bottoming_calibration_starter[row][col] || ec_config.bottoming_reading[row][col] < (ec_config.noise_floor[row][col] + BOTTOMING_CALIBRATION_THRESHOLD)) {
-                eeprom_ec_config.bottoming_reading[row][col] = 1023;
+                eeprom_ec_config.bottoming_reading[row][col] = ADC_SATURATION;
             } else {
                 eeprom_ec_config.bottoming_reading[row][col] = ec_config.bottoming_reading[row][col];
             }

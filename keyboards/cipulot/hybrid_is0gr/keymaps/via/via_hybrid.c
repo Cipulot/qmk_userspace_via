@@ -241,23 +241,23 @@ void ec_rescale_values(uint8_t item) {
     switch (item) {
         // Rescale the APC mode actuation thresholds
         case 0:
-            ec_config.rescaled_mode_0_actuation_threshold = rescale(ec_config.mode_0_actuation_threshold, 0, 1023, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
+            ec_config.rescaled_mode_0_actuation_threshold = rescale(ec_config.mode_0_actuation_threshold, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
             break;
         // Rescale the APC mode release thresholds
         case 1:
-            ec_config.rescaled_mode_0_release_threshold = rescale(ec_config.mode_0_release_threshold, 0, 1023, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
+            ec_config.rescaled_mode_0_release_threshold = rescale(ec_config.mode_0_release_threshold, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
             break;
         // Rescale the Rapid Trigger mode initial deadzone offsets
         case 2:
-            ec_config.rescaled_mode_1_initial_deadzone_offset = rescale(ec_config.mode_1_initial_deadzone_offset, 0, 1023, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
+            ec_config.rescaled_mode_1_initial_deadzone_offset = rescale(ec_config.mode_1_initial_deadzone_offset, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
             break;
         // Rescale the Rapid Trigger mode actuation offsets
         case 3:
-            ec_config.rescaled_mode_1_actuation_offset = rescale(ec_config.mode_1_actuation_offset, 0, 1023, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
+            ec_config.rescaled_mode_1_actuation_offset = rescale(ec_config.mode_1_actuation_offset, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
             break;
         // Rescale the Rapid Trigger mode release offsets
         case 4:
-            ec_config.rescaled_mode_1_release_offset = rescale(ec_config.mode_1_release_offset, 0, 1023, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
+            ec_config.rescaled_mode_1_release_offset = rescale(ec_config.mode_1_release_offset, ec_config.noise_floor, eeprom_ec_config.bottoming_reading);
             break;
 
         default:
@@ -297,7 +297,7 @@ void ec_save_bottoming_reading(void) {
     // 2. The key is in the current layout but is not being pressed.
     // In both conditions we should set the bottoming reading to the maximum value to avoid false positives.
     if (ec_config.bottoming_calibration_starter || ec_config.bottoming_reading < (ec_config.noise_floor + BOTTOMING_CALIBRATION_THRESHOLD)) {
-        eeprom_ec_config.bottoming_reading = 1023;
+        eeprom_ec_config.bottoming_reading = ADC_SATURATION;
     } else {
         eeprom_ec_config.bottoming_reading = ec_config.bottoming_reading;
     }

@@ -148,5 +148,5 @@ bool indicators_callback(void) {
 uint8_t *pIndicators = (uint8_t *)&eeprom_lily_config;
 
 indicator_config *get_indicator_p(int index) {
-    return (indicator_config *)(pIndicators + 6 * index);
+    return (indicator_config *)(pIndicators + index * sizeof(indicator_config));
 }
