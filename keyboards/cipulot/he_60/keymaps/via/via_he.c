@@ -277,7 +277,7 @@ void he_save_bottoming_reading(void) {
             // 2. The key is on an alternative layout, therefore not being pressed
             // 3. The key in in the current layout but not being pressed
             if (he_config.bottoming_reading[row][col] < (he_config.noise_floor[row][col] + BOTTOMING_CALIBRATION_THRESHOLD)) {
-                eeprom_he_config.bottoming_reading[row][col] = ADC_SATURATION;
+                eeprom_he_config.bottoming_reading[row][col] = 1023;
             } else {
                 eeprom_he_config.bottoming_reading[row][col] = he_config.bottoming_reading[row][col];
             }

@@ -331,7 +331,7 @@ void ec_save_bottoming_reading(void) {
             // 2. The key is in the current layout but is not being pressed.
             // In both conditions we should set the bottoming reading to the maximum value to avoid false positives.
             if (ec_config.bottoming_calibration_starter[row][col] || ec_config.bottoming_reading[row][col] < (ec_config.noise_floor[row][col] + BOTTOMING_CALIBRATION_THRESHOLD)) {
-                eeprom_ec_config.bottoming_reading[row][col] = ADC_SATURATION;
+                eeprom_ec_config.bottoming_reading[row][col] = 1023;
             } else {
                 eeprom_ec_config.bottoming_reading[row][col] = ec_config.bottoming_reading[row][col];
             }
