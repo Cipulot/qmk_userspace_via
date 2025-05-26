@@ -51,7 +51,7 @@ void eeconfig_init_kb(void) {
     eeprom_mx_config.ind7.enabled = true;
 
     // Write default value to EEPROM now
-    eeconfig_update_kb_datablock(&eeprom_mx_config);
+    eeconfig_update_kb_datablock(&eeprom_mx_config, 0, EECONFIG_KB_DATA_SIZE);
 
     eeconfig_init_user();
 }
@@ -62,7 +62,7 @@ void keyboard_post_init_kb(void) {
     indicators_init();
 
     // Read custom menu variables from memory
-    eeconfig_read_kb_datablock(&eeprom_mx_config);
+    eeconfig_read_kb_datablock(&eeprom_mx_config, 0, EECONFIG_KB_DATA_SIZE);
 
     // Call the indicator callback to set the indicator color
     indicators_callback();

@@ -14,7 +14,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "eeprom_tools.h"
 #include "mx_wk.h"
 #include "print.h"
 #include "via.h"
@@ -52,18 +51,18 @@ void via_config_set_value(uint8_t *data) {
         case 1: {
             current_indicator_p->enabled = value_data[0];
             if (indi_index == 0) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind1.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind1.enabled);
             } else if (indi_index == 1) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind2.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind2.enabled);
             }
             break;
         }
         case 2: {
             current_indicator_p->v = value_data[0];
             if (indi_index == 0) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind1.v);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind1.v);
             } else if (indi_index == 1) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind2.v);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind2.v);
             }
             break;
         }
@@ -71,20 +70,20 @@ void via_config_set_value(uint8_t *data) {
             current_indicator_p->h = value_data[0];
             current_indicator_p->s = value_data[1];
             if (indi_index == 0) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind1.h);
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind1.s);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind1.h);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind1.s);
             } else if (indi_index == 1) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind2.h);
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind2.s);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind2.h);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind2.s);
             }
             break;
         }
         case 4: {
             current_indicator_p->func = (current_indicator_p->func & 0xF0) | (uint8_t)value_data[0];
             if (indi_index == 0) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind1.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind1.func);
             } else if (indi_index == 1) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_wk_config, ind2.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_wk_config, ind2.func);
             }
             break;
         }

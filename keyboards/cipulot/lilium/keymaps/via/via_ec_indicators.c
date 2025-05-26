@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "keyboards/cipulot/common/eeprom_tools.h"
+
 #include "ec_switch_matrix.h"
 #include "action.h"
 #include "print.h"
@@ -68,21 +68,21 @@ void via_config_set_value(uint8_t *data) {
                 uprintf("# Caps indicator disabled #\n");
                 uprintf("###########################\n");
             }
-            EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, caps.enabled);
+            eeconfig_update_kb_datablock_field(eeprom_ec_config, caps.enabled);
             break;
         }
         case id_caps_indicator_brightness: {
             eeprom_ec_config.caps.v = value_data[0];
             uprintf("Caps indicator brightness: %d\n", eeprom_ec_config.caps.v);
-            EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, caps.v);
+            eeconfig_update_kb_datablock_field(eeprom_ec_config, caps.v);
             break;
         }
         case id_caps_indicator_color: {
             eeprom_ec_config.caps.h = value_data[0];
             eeprom_ec_config.caps.s = value_data[1];
             uprintf("Caps indicator color: %d, %d\n", eeprom_ec_config.caps.h, eeprom_ec_config.caps.s);
-            EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, caps.h);
-            EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, caps.s);
+            eeconfig_update_kb_datablock_field(eeprom_ec_config, caps.h);
+            eeconfig_update_kb_datablock_field(eeprom_ec_config, caps.s);
             break;
         }
         case id_layers_indicator_enabled: {
@@ -97,7 +97,7 @@ void via_config_set_value(uint8_t *data) {
                 uprintf("# Layer indicator disabled #\n");
                 uprintf("############################\n");
             }
-            EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, layer_indicator_enabled);
+            eeconfig_update_kb_datablock_field(eeprom_ec_config, layer_indicator_enabled);
             break;
         }
         case id_actuation_mode: {
@@ -112,7 +112,7 @@ void via_config_set_value(uint8_t *data) {
                 uprintf("# Actuation Mode: Rapid Trigger #\n");
                 uprintf("#################################\n");
             }
-            EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, actuation_mode);
+            eeconfig_update_kb_datablock_field(eeprom_ec_config, actuation_mode);
             break;
         }
         case id_mode_0_actuation_threshold: {
@@ -352,7 +352,7 @@ void ec_save_threshold_data(uint8_t option) {
         ec_rescale_values(3);
         ec_rescale_values(4);
     }
-    eeconfig_update_kb_datablock(&eeprom_ec_config);
+    eeconfig_update_kb_datablock(&eeprom_ec_config, 0, EECONFIG_KB_DATA_SIZE);
     uprintf("####################################\n");
     uprintf("# New thresholds applied and saved #\n");
     uprintf("####################################\n");
@@ -380,7 +380,7 @@ void ec_save_bottoming_reading(void) {
     ec_rescale_values(2);
     ec_rescale_values(3);
     ec_rescale_values(4);
-    eeconfig_update_kb_datablock(&eeprom_ec_config);
+    eeconfig_update_kb_datablock(&eeprom_ec_config, 0, EECONFIG_KB_DATA_SIZE);
 }
 
 // Show the calibration data

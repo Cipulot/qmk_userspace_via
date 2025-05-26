@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "keyboards/cipulot/common/eeprom_tools.h"
+
 #include "ec_switch_matrix.h"
 #include "action.h"
 #include "print.h"
@@ -78,22 +78,22 @@ void via_config_set_value(uint8_t *data) {
             case 1: {
                 current_indicator_p->enabled = value_data[0];
                 if (indi_index == 0) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind1.enabled);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.enabled);
                 } else if (indi_index == 1) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind2.enabled);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.enabled);
                 } else if (indi_index == 2) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind3.enabled);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.enabled);
                 }
                 break;
             }
             case 2: {
                 current_indicator_p->v = value_data[0];
                 if (indi_index == 0) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind1.v);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.v);
                 } else if (indi_index == 1) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind2.v);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.v);
                 } else if (indi_index == 2) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind3.v);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.v);
                 }
                 break;
             }
@@ -101,36 +101,36 @@ void via_config_set_value(uint8_t *data) {
                 current_indicator_p->h = value_data[0];
                 current_indicator_p->s = value_data[1];
                 if (indi_index == 0) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind1.h);
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind1.s);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.h);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.s);
                 } else if (indi_index == 1) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind2.h);
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind2.s);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.h);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.s);
                 } else if (indi_index == 2) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind3.h);
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind3.s);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.h);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.s);
                 }
                 break;
             }
             case 4: {
                 current_indicator_p->func = (current_indicator_p->func & 0xF0) | (uint8_t)value_data[0];
                 if (indi_index == 0) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind1.func);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.func);
                 } else if (indi_index == 1) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind2.func);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.func);
                 } else if (indi_index == 2) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind3.func);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.func);
                 }
                 break;
             }
             case 5: {
                 current_indicator_p->func = (current_indicator_p->func & 0x0F) | ((uint8_t)value_data[0] << 4);
                 if (indi_index == 0) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind1.func);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.func);
                 } else if (indi_index == 1) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind2.func);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.func);
                 } else if (indi_index == 2) {
-                    EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, ind3.func);
+                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.func);
                 }
                 break;
             }
@@ -154,7 +154,7 @@ void via_config_set_value(uint8_t *data) {
                     uprintf("# Actuation Mode: Rapid Trigger #\n");
                     uprintf("#################################\n");
                 }
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_ec_config, actuation_mode);
+                eeconfig_update_kb_datablock_field(eeprom_ec_config, actuation_mode);
                 break;
             }
             case id_mode_0_actuation_threshold: {
@@ -411,7 +411,7 @@ void ec_save_threshold_data(uint8_t option) {
         ec_rescale_values(3);
         ec_rescale_values(4);
     }
-    eeconfig_update_kb_datablock(&eeprom_ec_config);
+    eeconfig_update_kb_datablock(&eeprom_ec_config, 0, EECONFIG_KB_DATA_SIZE);
     uprintf("####################################\n");
     uprintf("# New thresholds applied and saved #\n");
     uprintf("####################################\n");
@@ -439,7 +439,7 @@ void ec_save_bottoming_reading(void) {
     ec_rescale_values(2);
     ec_rescale_values(3);
     ec_rescale_values(4);
-    eeconfig_update_kb_datablock(&eeprom_ec_config);
+    eeconfig_update_kb_datablock(&eeprom_ec_config, 0, EECONFIG_KB_DATA_SIZE);
 }
 
 // Show the calibration data

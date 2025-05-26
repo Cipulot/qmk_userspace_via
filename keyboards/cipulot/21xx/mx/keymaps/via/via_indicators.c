@@ -14,7 +14,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "eeprom_tools.h"
 #include "mx.h"
 #include "print.h"
 #include "via.h"
@@ -58,38 +57,38 @@ void via_config_set_value(uint8_t *data) {
         case 1: {
             current_indicator_p->enabled = value_data[0];
             if (indi_index == 0) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind1.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind1.enabled);
             } else if (indi_index == 1) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind2.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind2.enabled);
             } else if (indi_index == 2) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind3.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind3.enabled);
             } else if (indi_index == 3) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind4.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind4.enabled);
             } else if (indi_index == 4) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind5.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind5.enabled);
             } else if (indi_index == 5) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind6.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind6.enabled);
             } else if (indi_index == 6) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind7.enabled);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind7.enabled);
             }
             break;
         }
         case 2: {
             current_indicator_p->func = (current_indicator_p->func & 0xF0) | (uint8_t)value_data[0];
             if (indi_index == 0) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind1.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind1.func);
             } else if (indi_index == 1) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind2.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind2.func);
             } else if (indi_index == 2) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind3.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind3.func);
             } else if (indi_index == 3) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind4.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind4.func);
             } else if (indi_index == 4) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind5.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind5.func);
             } else if (indi_index == 5) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind6.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind6.func);
             } else if (indi_index == 6) {
-                EEPROM_KB_PARTIAL_UPDATE(eeprom_mx_config, ind7.func);
+                eeconfig_update_kb_datablock_field(eeprom_mx_config, ind7.func);
             }
             break;
         }
