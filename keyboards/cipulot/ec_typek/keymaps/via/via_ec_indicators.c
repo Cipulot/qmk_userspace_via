@@ -180,12 +180,12 @@ void via_config_set_value(uint8_t *data) {
             break;
         }
         case id_mode_1_actuation_offset: {
-            ec_config.mode_1_actuation_offset = value_data[1] | (value_data[0] << 8);
+            ec_config.mode_1_actuation_offset = value_data[0];
             uprintf("Rapid Trigger Mode Actuation Sensitivity: %d\n", ec_config.mode_1_actuation_offset);
             break;
         }
         case id_mode_1_release_offset: {
-            ec_config.mode_1_release_offset = value_data[1] | (value_data[0] << 8);
+            ec_config.mode_1_release_offset = value_data[0];
             uprintf("Rapid Trigger Mode Release Sensitivity: %d\n", ec_config.mode_1_release_offset);
             break;
         }
@@ -310,13 +310,11 @@ void via_config_get_value(uint8_t *data) {
             break;
         }
         case id_mode_1_actuation_offset: {
-            value_data[0] = eeprom_ec_config.mode_1_actuation_offset >> 8;
-            value_data[1] = eeprom_ec_config.mode_1_actuation_offset & 0xFF;
+            value_data[0] = eeprom_ec_config.mode_1_actuation_offset;
             break;
         }
         case id_mode_1_release_offset: {
-            value_data[0] = eeprom_ec_config.mode_1_release_offset >> 8;
-            value_data[1] = eeprom_ec_config.mode_1_release_offset & 0xFF;
+            value_data[0] = eeprom_ec_config.mode_1_release_offset;
             break;
         }
         default: {
