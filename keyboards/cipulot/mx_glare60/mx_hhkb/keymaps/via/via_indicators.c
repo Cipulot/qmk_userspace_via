@@ -121,7 +121,6 @@ void via_config_get_value(uint8_t *data) {
         }
         case 4: {
             value_data[0] = current_indicator_p->func & 0x0F;
-
             break;
         }
         default: {
