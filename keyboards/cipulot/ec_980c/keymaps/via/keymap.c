@@ -15,8 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keyboards/cipulot/common/ec_switch_matrix.h"
-
+#include "keyboards/cipulot/ec_980c/ec_switch_matrix.h"
 #include "keymap_japanese.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
