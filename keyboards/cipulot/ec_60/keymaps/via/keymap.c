@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "keyboards/cipulot/common/ec_switch_matrix.h"
 
 #include "keymap_japanese.h"
 
