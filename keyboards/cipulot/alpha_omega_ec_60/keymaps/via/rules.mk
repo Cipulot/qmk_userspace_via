@@ -1,1 +1,2 @@
 VIA_ENABLE = yes
+SECURE_ENABLE = yes
