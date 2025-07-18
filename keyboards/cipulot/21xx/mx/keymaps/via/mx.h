@@ -54,5 +54,5 @@ extern eeprom_mx_config_t eeprom_mx_config;
 
 void              indicators_init(void);
 bool              indicators_callback(void);
-uint8_t          *pIndicators;
+extern uint8_t *pIndicators;
 indicator_config *get_indicator_p(int index);

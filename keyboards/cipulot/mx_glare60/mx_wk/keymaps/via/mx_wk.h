@@ -39,5 +39,5 @@ _Static_assert(sizeof(eeprom_mx_wk_config_t) == EECONFIG_KB_DATA_SIZE, "Mismatch
 extern eeprom_mx_wk_config_t eeprom_mx_wk_config;
 
 bool              indicators_callback(void);
-uint8_t          *pIndicators;
+extern uint8_t *pIndicators;
 indicator_config *get_indicator_p(int index);
