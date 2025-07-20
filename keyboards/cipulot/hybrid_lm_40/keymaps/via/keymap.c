@@ -15,7 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keyboards/cipulot/hybrid_kiddo40/hybrid_switch_matrix.h"
+#include "keyboards/cipulot/hybrid_lm_40/hybrid_switch_matrix.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format off
