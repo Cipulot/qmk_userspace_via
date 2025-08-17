@@ -18,6 +18,7 @@
 #include "mx_wkl.h"
 
 eeprom_mx_wkl_config_t eeprom_mx_wkl_config;
+socd_cleaner_t        socd_opposing_pairs[4];
 
 void eeconfig_init_kb(void) {
     // Default values
@@ -94,6 +95,8 @@ bool func_switch(uint8_t func) {
         case 0x07: // layer 3
         case 0x08: // layer 4
         case 0x09: // layer 5
+        case 0x0A: // layer 6
+        case 0x0B: // layer 7
         {
             if (IS_LAYER_ON((int)(func)-4)) return true;
             break;
@@ -135,5 +138,5 @@ bool indicators_callback(void) {
 uint8_t *pIndicators = (uint8_t *)&eeprom_mx_wkl_config;
 
 indicator_config *get_indicator_p(int index) {
-    return (indicator_config *)(pIndicators + 6 * index);
+    return (indicator_config *)(pIndicators + index * sizeof(indicator_config));
 }

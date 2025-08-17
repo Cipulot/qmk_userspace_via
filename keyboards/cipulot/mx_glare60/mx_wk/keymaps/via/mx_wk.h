@@ -18,6 +18,7 @@
 
 #include "quantum.h"
 #include "util.h"
+#include "socd_cleaner.h"
 
 typedef struct _indicator_config_t {
     uint8_t h;
@@ -31,6 +32,7 @@ typedef struct _indicator_config_t {
 typedef struct PACKED {
     indicator_config ind1;
     indicator_config ind2;
+    socd_cleaner_t   socd_opposing_pairs[4]; // SOCD
 } eeprom_mx_wk_config_t;
 
 // Check if the size of the reserved persistent memory is the same as the size of struct eeprom_ec_config_t
@@ -38,6 +40,8 @@ _Static_assert(sizeof(eeprom_mx_wk_config_t) == EECONFIG_KB_DATA_SIZE, "Mismatch
 
 extern eeprom_mx_wk_config_t eeprom_mx_wk_config;
 
+extern socd_cleaner_t socd_opposing_pairs[4];
+
 bool              indicators_callback(void);
-extern uint8_t *pIndicators;
+extern uint8_t   *pIndicators;
 indicator_config *get_indicator_p(int index);

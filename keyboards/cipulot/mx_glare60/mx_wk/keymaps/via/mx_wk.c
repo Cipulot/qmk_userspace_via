@@ -18,6 +18,7 @@
 #include "mx_wk.h"
 
 eeprom_mx_wk_config_t eeprom_mx_wk_config;
+socd_cleaner_t        socd_opposing_pairs[4];
 
 void eeconfig_init_kb(void) {
     // Default values
@@ -35,6 +36,25 @@ void eeconfig_init_kb(void) {
     eeprom_mx_wk_config.ind2.index   = 1;
     eeprom_mx_wk_config.ind2.enabled = true;
 
+    // Initialize the SOCD cleaner pairs
+    const struct {
+        uint16_t key1;
+        uint16_t key2;
+    } socd_pairs[] = {
+        {KC_A, KC_D},
+        {KC_W, KC_S},
+        {KC_Z, KC_X},
+        {KC_LEFT, KC_RIGHT},
+    };
+
+    for (int i = 0; i < 4; i++) {
+        eeprom_mx_wk_config.socd_opposing_pairs[i].keys[0]    = socd_pairs[i].key1;
+        eeprom_mx_wk_config.socd_opposing_pairs[i].keys[1]    = socd_pairs[i].key2;
+        eeprom_mx_wk_config.socd_opposing_pairs[i].resolution = SOCD_CLEANER_OFF;
+        eeprom_mx_wk_config.socd_opposing_pairs[i].held[0]    = false;
+        eeprom_mx_wk_config.socd_opposing_pairs[i].held[1]    = false;
+    }
+
     // Write default value to EEPROM now
     eeconfig_update_kb_datablock(&eeprom_mx_wk_config, 0, EECONFIG_KB_DATA_SIZE);
 
@@ -45,6 +65,8 @@ void eeconfig_init_kb(void) {
 void keyboard_post_init_kb(void) {
     // Read custom menu variables from memory
     eeconfig_read_kb_datablock(&eeprom_mx_wk_config, 0, EECONFIG_KB_DATA_SIZE);
+
+    memcpy(socd_opposing_pairs, eeprom_mx_wk_config.socd_opposing_pairs, sizeof(socd_opposing_pairs));
 
     // Set the RGB LEDs range that will be used for the effects
     rgblight_set_effect_range(2, 1);
@@ -94,6 +116,8 @@ bool func_switch(uint8_t func) {
         case 0x07: // layer 3
         case 0x08: // layer 4
         case 0x09: // layer 5
+        case 0x0A: // layer 6
+        case 0x0B: // layer 7
         {
             if (IS_LAYER_ON((int)(func)-4)) return true;
             break;
@@ -135,5 +159,5 @@ bool indicators_callback(void) {
 uint8_t *pIndicators = (uint8_t *)&eeprom_mx_wk_config;
 
 indicator_config *get_indicator_p(int index) {
-    return (indicator_config *)(pIndicators + 6 * index);
+    return (indicator_config *)(pIndicators + index * sizeof(indicator_config));
 }
