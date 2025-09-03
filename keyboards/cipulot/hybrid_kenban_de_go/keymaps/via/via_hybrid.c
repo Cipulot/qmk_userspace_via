@@ -20,6 +20,11 @@
 #include "print.h"
 #include "via.h"
 
+#ifdef SPLIT_KEYBOARD
+#    include "transactions.h"
+#    include "usb_descriptor.h"
+#endif
+
 #ifdef VIA_ENABLE
 
 void     ec_rescale_values(uint8_t item);
@@ -68,6 +73,12 @@ void via_config_set_value(uint8_t *data) {
     // data = [ value_id, value_data ]
     uint8_t *value_id   = &(data[0]);
     uint8_t *value_data = &(data[1]);
+
+#    ifdef SPLIT_KEYBOARD
+    if (is_keyboard_master()) {
+        transaction_rpc_send(RPC_ID_VIA_CMD, RAW_EPSIZE - 2, data);
+    }
+#    endif
 
     switch (*value_id) {
         case id_switch_type: {
@@ -577,5 +588,15 @@ uint16_t socd_pair_handler(bool mode, uint8_t pair_idx, uint8_t field, uint16_t 
         }
     }
 }
+
+#    ifdef SPLIT_KEYBOARD
+void via_cmd_slave_handler(uint8_t m2s_size, const void *m2s_buffer, uint8_t s2m_size, void *s2m_buffer) {
+    if (m2s_size == (RAW_EPSIZE - 2)) {
+        via_config_set_value((uint8_t *)m2s_buffer);
+    } else {
+        uprintf("Unexpected response in slave handler\n");
+    }
+}
+#    endif
 
 #endif // VIA_ENABLE
