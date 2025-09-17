@@ -35,45 +35,42 @@ enum via_enums {
     id_ind1_enabled = 1,
     id_ind1_brightness = 2,
     id_ind1_color = 3,
-    id_ind1_func1 = 4,
-    id_ind1_func2 = 5,
-    id_ind2_enabled = 6,
-    id_ind2_brightness = 7,
-    id_ind2_color = 8,
-    id_ind2_func1 = 9,
-    id_ind2_func2 = 10,
-    id_ind3_enabled = 11,
-    id_ind3_brightness = 12,
-    id_ind3_color = 13,
-    id_ind3_func1 = 14,
-    id_ind3_func2 = 15,
-    id_actuation_mode = 16,
-    id_mode_0_actuation_threshold = 17,
-    id_mode_0_release_threshold = 18,
-    id_save_threshold_data = 19,
-    id_mode_1_initial_deadzone_offset = 20,
-    id_mode_1_actuation_offset = 21,
-    id_mode_1_release_offset = 22,
-    id_bottoming_calibration = 23,
-    id_noise_floor_calibration = 24,
-    id_show_calibration_data = 25,
-    id_clear_bottoming_calibration_data = 26,
-    id_socd_pair_1_enabled = 27,
-    id_socd_pair_1_key_1 = 28,
-    id_socd_pair_1_key_2 = 29,
-    id_socd_pair_1_mode = 30,
-    id_socd_pair_2_enabled = 31,
-    id_socd_pair_2_key_1 = 32,
-    id_socd_pair_2_key_2 = 33,
-    id_socd_pair_2_mode = 34,
-    id_socd_pair_3_enabled = 35,
-    id_socd_pair_3_key_1 = 36,
-    id_socd_pair_3_key_2 = 37,
-    id_socd_pair_3_mode = 38,
-    id_socd_pair_4_enabled = 39,
-    id_socd_pair_4_key_1 = 40,
-    id_socd_pair_4_key_2 = 41,
-    id_socd_pair_4_mode = 42,
+    id_ind1_func = 4,
+    id_ind2_enabled = 5,
+    id_ind2_brightness = 6,
+    id_ind2_color = 7,
+    id_ind2_func = 8,
+    id_ind3_enabled = 9,
+    id_ind3_brightness = 10,
+    id_ind3_color = 11,
+    id_ind3_func = 12,
+    id_actuation_mode = 13,
+    id_mode_0_actuation_threshold = 14,
+    id_mode_0_release_threshold = 15,
+    id_save_threshold_data = 16,
+    id_mode_1_initial_deadzone_offset = 17,
+    id_mode_1_actuation_offset = 18,
+    id_mode_1_release_offset = 19,
+    id_bottoming_calibration = 20,
+    id_noise_floor_calibration = 21,
+    id_show_calibration_data = 22,
+    id_clear_bottoming_calibration_data = 23,
+    id_socd_pair_1_enabled = 24,
+    id_socd_pair_1_key_1 = 25,
+    id_socd_pair_1_key_2 = 26,
+    id_socd_pair_1_mode = 27,
+    id_socd_pair_2_enabled = 28,
+    id_socd_pair_2_key_1 = 29,
+    id_socd_pair_2_key_2 = 30,
+    id_socd_pair_2_mode = 31,
+    id_socd_pair_3_enabled = 32,
+    id_socd_pair_3_key_1 = 33,
+    id_socd_pair_3_key_2 = 34,
+    id_socd_pair_3_mode = 35,
+    id_socd_pair_4_enabled = 36,
+    id_socd_pair_4_key_1 = 37,
+    id_socd_pair_4_key_2 = 38,
+    id_socd_pair_4_mode = 39,
     // clang-format on
 };
 
@@ -87,8 +84,8 @@ void via_config_set_value(uint8_t *data) {
     uint8_t *value_data = &(data[1]);
 
     if ((*value_id) < id_actuation_mode) {
-        indi_index                            = ((int)(*value_id) - 1) / 5;
-        data_index                            = (int)(*value_id) - indi_index * 5;
+        indi_index                            = ((int)(*value_id) - 1) / 4;
+        data_index                            = (int)(*value_id) - indi_index * 4;
         indicator_config *current_indicator_p = get_indicator_p(indi_index);
 
         switch (data_index) {
@@ -131,17 +128,6 @@ void via_config_set_value(uint8_t *data) {
             }
             case 4: {
                 current_indicator_p->func = (current_indicator_p->func & 0xF0) | (uint8_t)value_data[0];
-                if (indi_index == 0) {
-                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.func);
-                } else if (indi_index == 1) {
-                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind2.func);
-                } else if (indi_index == 2) {
-                    eeconfig_update_kb_datablock_field(eeprom_ec_config, ind3.func);
-                }
-                break;
-            }
-            case 5: {
-                current_indicator_p->func = (current_indicator_p->func & 0x0F) | ((uint8_t)value_data[0] << 4);
                 if (indi_index == 0) {
                     eeconfig_update_kb_datablock_field(eeprom_ec_config, ind1.func);
                 } else if (indi_index == 1) {
@@ -308,8 +294,8 @@ void via_config_get_value(uint8_t *data) {
     uint16_t socd_pair_result;
 
     if ((*value_id) < id_actuation_mode) {
-        indi_index                            = ((int)(*value_id) - 1) / 5;
-        data_index                            = (int)(*value_id) - indi_index * 5;
+        indi_index                            = ((int)(*value_id) - 1) / 4;
+        data_index                            = (int)(*value_id) - indi_index * 4;
         indicator_config *current_indicator_p = get_indicator_p(indi_index);
 
         switch (data_index) {
@@ -330,8 +316,38 @@ void via_config_get_value(uint8_t *data) {
                 value_data[0] = current_indicator_p->func & 0x0F;
                 break;
             }
-            case 5: {
-                value_data[0] = (current_indicator_p->func & 0xF0) >> 4;
+            default: {
+                // Unhandled value.
+                break;
+            }
+        }
+    } else {
+        switch (*value_id) {
+            case id_actuation_mode: {
+                value_data[0] = eeprom_ec_config.actuation_mode;
+                break;
+            }
+            case id_mode_0_actuation_threshold: {
+                value_data[0] = eeprom_ec_config.mode_0_actuation_threshold >> 8;
+                value_data[1] = eeprom_ec_config.mode_0_actuation_threshold & 0xFF;
+                break;
+            }
+            case id_mode_0_release_threshold: {
+                value_data[0] = eeprom_ec_config.mode_0_release_threshold >> 8;
+                value_data[1] = eeprom_ec_config.mode_0_release_threshold & 0xFF;
+                break;
+            }
+            case id_mode_1_initial_deadzone_offset: {
+                value_data[0] = eeprom_ec_config.mode_1_initial_deadzone_offset >> 8;
+                value_data[1] = eeprom_ec_config.mode_1_initial_deadzone_offset & 0xFF;
+                break;
+            }
+            case id_mode_1_actuation_offset: {
+                value_data[0] = eeprom_ec_config.mode_1_actuation_offset;
+                break;
+            }
+            case id_mode_1_release_offset: {
+                value_data[0] = eeprom_ec_config.mode_1_release_offset;
                 break;
             }
             case id_socd_pair_1_enabled:
@@ -398,40 +414,6 @@ void via_config_get_value(uint8_t *data) {
             case id_socd_pair_4_mode:
                 value_data[0] = socd_pair_handler(0, 3, 3, 0);
                 break;
-            default: {
-                // Unhandled value.
-                break;
-            }
-        }
-    } else {
-        switch (*value_id) {
-            case id_actuation_mode: {
-                value_data[0] = eeprom_ec_config.actuation_mode;
-                break;
-            }
-            case id_mode_0_actuation_threshold: {
-                value_data[0] = eeprom_ec_config.mode_0_actuation_threshold >> 8;
-                value_data[1] = eeprom_ec_config.mode_0_actuation_threshold & 0xFF;
-                break;
-            }
-            case id_mode_0_release_threshold: {
-                value_data[0] = eeprom_ec_config.mode_0_release_threshold >> 8;
-                value_data[1] = eeprom_ec_config.mode_0_release_threshold & 0xFF;
-                break;
-            }
-            case id_mode_1_initial_deadzone_offset: {
-                value_data[0] = eeprom_ec_config.mode_1_initial_deadzone_offset >> 8;
-                value_data[1] = eeprom_ec_config.mode_1_initial_deadzone_offset & 0xFF;
-                break;
-            }
-            case id_mode_1_actuation_offset: {
-                value_data[0] = eeprom_ec_config.mode_1_actuation_offset;
-                break;
-            }
-            case id_mode_1_release_offset: {
-                value_data[0] = eeprom_ec_config.mode_1_release_offset;
-                break;
-            }
             default: {
                 // Unhandled value.
                 break;
