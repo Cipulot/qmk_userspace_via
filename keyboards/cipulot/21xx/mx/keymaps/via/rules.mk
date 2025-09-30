@@ -1,3 +1,1 @@
-VIA_ENABLE = yes
-SECURE_ENABLE = yes
-SRC += mx.c via_indicators.c
+VIA_ENABLE = yesSRC += mx.c via_indicators.c
