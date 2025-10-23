@@ -1,1 +1,2 @@
-VIA_ENABLE = yesSRC += via_hybrid.c
+VIA_ENABLE = yes
+SRC += via_hybrid.c
