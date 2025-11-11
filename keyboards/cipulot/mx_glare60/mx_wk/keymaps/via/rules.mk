@@ -1,1 +1,2 @@
-VIA_ENABLE = yesSRC += mx_wk.c via_indicators.c
+VIA_ENABLE = yes
+SRC += mx_wk.c via_indicators.c

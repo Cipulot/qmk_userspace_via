@@ -1,1 +1,2 @@
-VIA_ENABLE = yesSRC += via_ec.c
+VIA_ENABLE = yes
+SRC += via_ec.c
